@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --tree-green-dark: #0f3d23;
+            --tree-green-light: #1a5e3a;
+            --trunk-brown: #4a3121;
+            --star-gold: #ffd700;
+            --bg-night-top: #091428;
+            --bg-night-bottom: #1e3c72;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background: linear-gradient(to bottom, var(--bg-night-top), var(--bg-night-bottom));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* --- 背景雪花动画 --- */
+        .snow-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #fff;
+            font-size: 1em;
+            opacity: 0.8;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+
+        /* --- 主场景 --- */
+        .scene {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+             /* 给树添加一个轻微的呼吸感摇摆 */
+            animation: subtleSway 5s ease-in-out infinite alternate;
+        }
+
+         @keyframes subtleSway {
+            from { transform: rotate(-0.5deg); }
+            to { transform: rotate(0.5deg); }
+        }
+
+
+        /* --- 圣诞树主体结构 --- */
+        .tree-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+        }
+
+        /* 树干 */
+        .trunk {
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(to right, #332215, var(--trunk-brown), #332215);
+            border-radius: 5px;
+            position: relative;
+            top: -10px;
+            z-index: 1;
+        }
+
+        /* 树叶层级 - 使用圆角和渐变模拟自然的蓬松感 */
+        .layer {
+            background: radial-gradient(circle at 50% 100%, var(--tree-green-light), var(--tree-green-dark));
+            border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+            position: relative;
+            z-index: 2;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.2);
+        }
+
+        .layer-bottom {
+            width: 220px;
+            height: 160px;
+            margin-top: -60px;
+        }
+        .layer-middle {
+            width: 180px;
+            height: 130px;
+            margin-top: -50px;
+            z-index: 3;
+        }
+        .layer-top {
+            width: 140px;
+            height: 100px;
+            z-index: 4;
+        }
+
+        /* --- 顶部星星 --- */
+        .star {
+            position: relative;
+            top: 25px;
+            z-index: 10;
+            color: var(--star-gold);
+            font-size: 50px;
+            filter: drop-shadow(0 0 15px var(--star-gold));
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px var(--star-gold), 0 0 20px var(--star-gold); opacity: 0.8; }
+            to { text-shadow: 0 0 20px var(--star-gold), 0 0 30px #fff; opacity: 1; transform: scale(1.1); }
+        }
+
+        /* --- 装饰彩灯 --- */
+        .ornament-light {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        /* 几种不同的灯光颜色 */
+        .light-red { background-color: #ff3b3b; box-shadow: 0 0 10px #ff3b3b; }
+        .light-gold { background-color: #ffd700; box-shadow: 0 0 10px #ffd700; }
+        .light-blue { background-color: #4287f5; box-shadow: 0 0 10px #4287f5; }
+        .light-warm { background-color: #ff9a3b; box-shadow: 0 0 10px #ff9a3b; }
+
+        @keyframes twinkle {
+            0% { opacity: 0.4; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 15px currentColor; }
+        }
+
+        /* --- 祝福语文本 --- */
+        .greeting-text {
+            margin-top: 40px;
+            font-family: 'Mountains of Christmas', cursive;
+            color: #fff;
+            font-size: 3em;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3);
+            z-index: 20;
+            opacity: 0;
+            animation: fadeInText 3s ease-in-out forwards 1s;
+        }
+
+        .highlight-name {
+            color: var(--star-gold);
+            font-weight: bold;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="snow-container" id="snowContainer"></div>
+
+    <div class="scene">
+        <div class="tree-container">
+            <div class="star">★</div>
+            
+            <div class="layer layer-top" id="layerTop"></div>
+            <div class="layer layer-middle" id="layerMiddle"></div>
+            <div class="layer layer-bottom" id="layerBottom"></div>
+            
+            <div class="trunk"></div>
+        </div>
+    </div>
+
+    <h1 class="greeting-text">
+        Merry Christmas to <span class="highlight-name">ZhouZhouXiaoMing</span>
+    </h1>
+
+
+    <script>
+        // --- 1. 生成背景雪花 ---
+        function createSnow() {
+            const snowContainer = document.getElementById('snowContainer');
+            const snowflakeCount = 50; // 雪花数量
+
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.innerHTML = '❄';
+                
+                // 随机位置和动画参数
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.animationDuration = Math.random() * 5 + 5 + 's'; // 5-10秒
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+                snowflake.style.fontSize = Math.random() * 0.8 + 0.5 + 'em';
+
+                snowContainer.appendChild(snowflake);
+            }
+        }
+
+        // --- 2. 在树上生成装饰彩灯 ---
+        function createLights() {
+            const layers = [
+                document.getElementById('layerTop'),
+                document.getElementById('layerMiddle'),
+                document.getElementById('layerBottom')
+            ];
+            const lightColors = ['light-red', 'light-gold', 'light-blue', 'light-warm'];
+
+            layers.forEach(layer => {
+                // 根据层级大小决定灯的数量
+                let numLights = 0;
+                if (layer.classList.contains('layer-top')) numLights = 6;
+                if (layer.classList.contains('layer-middle')) numLights = 10;
+                if (layer.classList.contains('layer-bottom')) numLights = 14;
+
+                for (let i = 0; i < numLights; i++) {
+                    const light = document.createElement('div');
+                    light.classList.add('ornament-light');
+                    
+                    // 随机选择颜色
+                    const randomColorClass = lightColors[Math.floor(Math.random() * lightColors.length)];
+                    light.classList.add(randomColorClass);
+
+                    // 随机位置 (尝试限制在树的形状内，虽然不完美但足够自然)
+                    // 通过限制 top 和 left 的百分比范围，让灯光大致分布在树叶表面
+                    const randomTop = Math.random() * 60 + 20; // 20% - 80% 高度范围
+                    // 越靠近顶部，宽度越窄。这里做一个简单的近似计算来限制水平位置
+                    let widthConstraint = 35; // 默认左右各偏离中心35%
+                    if (randomTop < 40) widthConstraint = 20; // 顶部更窄
+                    
+                    const randomLeft = 50 + (Math.random() * widthConstraint * 2 - widthConstraint); // 以50%为中心左右偏移
+
+                    light.style.top = randomTop + '%';
+                    light.style.left = randomLeft + '%';
+
+                    // 随机闪烁延迟，让它们不同步
+                    light.style.animationDelay = Math.random() * 2 + 's';
+                    // 随机闪烁速度
+                    light.style.animationDuration = Math.random() * 1 + 1 + 's';
+
+                    layer.appendChild(light);
+                }
+            });
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('load', () => {
+            createSnow();
+            createLights();
+        });
+
+    </script>
+</body>
+</html>
